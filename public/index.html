@@ -1,89 +1,182 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台灣電子公文製作系統 - Taiwan E-Missive Creator</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Convert PDF files to Taiwan government e-missive format (.di and .sw files)">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>台灣電子公文製作系統 </h1>
+      <h2>Taiwan E-Missive Creator</h2>
+    </header>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/11.4.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/11.4.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/11.4.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/11.4.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/11.4.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/11.4.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/11.4.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/11.4.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/11.4.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/11.4.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <div class="tab-container">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="template">填寫表單 (Form)</button>
+        <button class="tab-btn" data-tab="upload">上傳 PDF (Upload)</button>
+      </div>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+      <div class="tab-content active" id="template">
+        <form id="documentForm">
+          <div class="document-container">
+            <div class="document-header">
+              <div class="file-info">
+                <div class="info-label">檔 號：</div>
+                <div class="info-label">保存年限：</div>
+              </div>
+
+              <div class="org-title">
+                <input type="text" id="orgName" name="orgName" value="台灣海力航空股份有限公司" required>
+                <div class="org-title-after">函</div>
+              </div>
+
+              <div class="contact-info">
+                <div class="info-row">
+                  <span class="info-label">地址：</span>
+                  <input type="text" id="address" name="address" value="台北市松山區民權東路三段178號8樓">
+                </div>
+                <div class="info-row">
+                  <span class="info-label">承辦人：</span>
+                  <input type="text" id="contact" name="contact" value="飛行管理部">
+                </div>
+                <div class="info-row">
+                  <span class="info-label">聯絡方式：</span>
+                  <input type="text" id="contactMethod" name="contactMethod" value="04-2615-1600分機111">
+                </div>
+                <div class="info-row">
+                  <span class="info-label">傳真：</span>
+                  <input type="text" id="fax" name="fax" value="02-7736-7388">
+                </div>
+                <div class="info-row">
+                  <span class="info-label">電子信箱：</span>
+                  <input type="text" id="email" name="email" value="sample.email@service.com.tw">
+                </div>
+              </div>
+
+              <div class="recipient-info">
+                <div class="info-row">
+                  <span class="info-label">受文者：</span>
+                  <input type="text" id="recipient" name="recipient" value="交通部民用航空局" required>
+                </div>
+              </div>
+
+              <div class="document-meta">
+                <div class="info-row">
+                  <span class="info-label">發文日期：</span>
+                  <input type="text" id="documentDate" name="documentDate" value="中華民國114年3月5日" required>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">發文字號：</span>
+                  <input type="text" id="documentPrefix" name="documentPrefix" value="海力航字第" style="width: 120px;">
+                  <input type="text" id="documentNumber" name="documentNumber" value="2025030018" style="width: 120px;">
+                  <span>號</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">速別：</span>
+                  <select id="priority" name="priority">
+                    <option value="普通件" selected>普通件</option>
+                    <option value="最速件">最速件</option>
+                    <option value="速件">速件</option>
+                  </select>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">密等及解密條件或保密期限：</span>
+                  <input type="text" id="securityLevel" name="securityLevel" value="">
+                </div>
+                <div class="info-row">
+                  <span class="info-label">附件：</span>
+                  <input type="text" id="attachment" name="attachment" value="如文">
+                </div>
+              </div>
+            </div>
+
+            <div class="document-body">
+              <div class="subject-section">
+                <div class="section-title">主旨：</div>
+                <textarea id="subject" name="subject" rows="2" required>復航務主管與機隊主管人員名冊一案，請查核。</textarea>
+              </div>
+
+              <div class="explanation-section">
+                <div class="section-title">說明：</div>
+                <div id="explanationItems">
+                  <div class="explanation-item">
+                    <div class="item-number">一、</div>
+                    <textarea class="item-content" rows="2">貴民航局114年2月21日標準一字第1140004506號函。</textarea>
+                  </div>
+                </div>
+                <button type="button" id="addExplanationItem" class="add-item-btn">+ 新增說明項目</button>
+              </div>
+
+              <div class="recipients-section">
+                <div class="info-row">
+                  <span class="info-label">正本：</span>
+                  <input type="text" id="primaryRecipient" name="primaryRecipient" value="交通部民用航空局">
+                </div>
+                <div class="info-row">
+                  <span class="info-label">副本：</span>
+                  <input type="text" id="copyRecipient" name="copyRecipient" value="">
+                </div>
+              </div>
+
+              <div class="signature-section">
+                <div class="signature-title">
+                  <input type="text" id="signerTitle" name="signerTitle" value="總經理">
+                </div>
+                <div class="signature-name">
+                  <input type="text" id="signerName" name="signerName" value="馬克斯">
+                </div>
+              </div>
+            </div>
+            
+            <div class="document-border-left"></div>
+          </div>
+
+          <div class="form-actions">
+            <div class="attachment-section">
+              <h4>上傳附件 PDF (Upload Attachments):</h4>
+              <div id="attachmentInputs">
+                <div class="attachment-input">
+                  <label for="pdfAttachment1">附件 1:</label>
+                  <input type="file" id="pdfAttachment1" name="pdfAttachment1" accept=".pdf" class="pdf-attachment">
+                </div>
+              </div>
+              <button type="button" id="addAttachmentBtn" class="add-item-btn">+ 新增附件</button>
+            </div>
+            <button type="button" id="generateBtn" class="action-btn">生成公文檔案 (Generate Files)</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-content" id="upload">
+        <form id="uploadForm">
+          <div class="upload-container">
+            <h3>上傳 PDF 公文檔案</h3>
+            <p>Upload your PDF document for conversion to .di and .sw format</p>
+            
+            <div class="file-upload">
+              <input type="file" id="pdfFile" name="pdfFile" accept=".pdf" required>
+              <button type="button" id="uploadBtn" class="action-btn">轉換 (Convert)</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div id="result" class="result-container">
+        <h3>處理結果 (Processing Result):</h3>
+        <div id="processingStatus"></div>
+        <div id="downloadLinks"></div>
+      </div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    
+    <footer>
+      <p>© 2025 Taiwan E-Missive Converter - For governmental use</p>
+    </footer>
+  </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+  <script src="script.js"></script>
+</body>
 </html>
